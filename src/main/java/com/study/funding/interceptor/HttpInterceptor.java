@@ -2,6 +2,9 @@ package com.study.funding.interceptor;
 
 
 import com.study.funding.entity.Member;
+import com.study.funding.error.ErrorCode;
+import com.study.funding.exception.entity.user.UserNotFoundException;
+import com.study.funding.exception.service.user.UserServiceException;
 import com.study.funding.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,13 +35,11 @@ public class HttpInterceptor implements HandlerInterceptor {
             if(member.isPresent()){
                 request.setAttribute("memberId", member.get().getMemberId());
             }else {
-                //TODO else throw Exception 처리 필요.
-                throw new RuntimeException("예외 발생!");
+                throw new UserNotFoundException(ErrorCode.NOT_SIGNED_UP_MEMBER);
             }
             return true;
         }else {
-            //TODO else throw Exception 처리 필요.
-            throw new RuntimeException("예외 발생!");
+            throw new UserServiceException(ErrorCode.NOT_EXITS_MEMBER_ID_HEADER);
         }
     }
 
