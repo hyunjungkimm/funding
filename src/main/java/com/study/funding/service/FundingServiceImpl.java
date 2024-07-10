@@ -60,7 +60,7 @@ public class FundingServiceImpl implements FundingService {
             productRepository.save(updateProduct);
             fundingRepository.save(funding);
 
-            fundingResponse.setFundingStatus("모집완료");
+            fundingResponse.setFundingStatus("펀딩 성공");
             return fundingResponse;
         } else {
             log.info("펀딩 종료");
