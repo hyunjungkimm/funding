@@ -33,11 +33,12 @@ public class HttpInterceptor implements HandlerInterceptor {
                 request.setAttribute("memberId", member.get().getMemberId());
             }else {
                 //TODO else throw Exception 처리 필요.
+                throw new RuntimeException("예외 발생!");
             }
             return true;
         }else {
             //TODO else throw Exception 처리 필요.
-            return false;
+            throw new RuntimeException("예외 발생!");
         }
     }
 
