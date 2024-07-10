@@ -21,7 +21,6 @@ public class FundingController {
     public FundingResponse productFunding(@RequestAttribute Long memberId,
                                           @PathVariable(name= "product_id") @Positive Long productId,
                                           @RequestBody @Valid FundingRequest fundingRequest) {
-        //TODO : @RequestBody FundingRequest 객체 데이터 타입이 다를 경우 예외처리
-        return fundingService.productFunding(memberId, productId, fundingRequest);
+          return fundingService.productFunding(memberId, productId, fundingRequest);
     }
 }
