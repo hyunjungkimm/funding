@@ -1,12 +1,11 @@
 package com.study.funding.service;
 
-import com.study.funding.data.FundingResponse;
 import com.study.funding.data.FundingStatus;
 import com.study.funding.data.ProductFundingResponse;
 import com.study.funding.data.ProductResponse;
 import com.study.funding.entity.Funding;
 import com.study.funding.entity.Product;
-import com.study.funding.exception.entity.EntityNotFoundException;
+import com.study.funding.exception.entity.prodcut.ProductNotFoundException;
 import com.study.funding.repository.ProductRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -29,18 +28,13 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public Product getProduct(long productId) {
-        return productRepository.findById(productId).orElseThrow(() -> new EntityNotFoundException(NOT_FOUND_PRODUCT));
-    }
-
-    @Transactional(readOnly = true)
-    public List<Product> getProductList() {
-        return productRepository.findAll();
+        return productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(NOT_FOUND_PRODUCT));
     }
 
     @Transactional
     public void updateProduct(Product product) {
         Product updateProduct =  productRepository.findById(product.getProductId()).orElseThrow(()
-                -> new EntityNotFoundException(NOT_FOUND_PRODUCT));
+                -> new ProductNotFoundException(NOT_FOUND_PRODUCT));
 
         updateProduct.setProductId(product.getProductId());
         updateProduct.setProductName(product.getProductName());
@@ -52,6 +46,10 @@ public class ProductService {
         updateProduct.setFundingMemberNumber(product.getFundingMemberNumber() + 1);
     }
 
+    @Transactional(readOnly = true)
+    public List<Product> getProductList() {
+        return productRepository.findAll();
+    }
 
     @Transactional(readOnly = true)
     public List<ProductResponse> getProducts() {

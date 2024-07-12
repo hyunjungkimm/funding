@@ -13,9 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.util.Optional;
-
-
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -30,13 +27,10 @@ public class HttpInterceptor implements HandlerInterceptor {
         log.info("memberId = {}", memberId);
 
         if(memberId != null){
-            Optional<Member> member = memberRepository.findById(Long.parseLong(memberId));
+            Member member = memberRepository.findById(Long.parseLong(memberId))
+                    .orElseThrow(() -> new UserNotFoundException(ErrorCode.NOT_SIGNED_UP_MEMBER));
 
-            if(member.isPresent()){
-                request.setAttribute("memberId", member.get().getMemberId());
-            }else {
-                throw new UserNotFoundException(ErrorCode.NOT_SIGNED_UP_MEMBER);
-            }
+            request.setAttribute("memberId", member.getMemberId());
             return true;
         }else {
             throw new UserServiceException(ErrorCode.NOT_EXITS_MEMBER_ID_HEADER);
