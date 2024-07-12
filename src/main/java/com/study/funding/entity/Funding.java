@@ -1,9 +1,10 @@
 package com.study.funding.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 
@@ -11,18 +12,31 @@ import java.time.LocalDate;
 @Table(name = "funding")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 public class Funding {
+
     @Id
-    @Column(name = "funding_id")
+    @Column(name = "funding_id", nullable = false)
     @GeneratedValue
     private Long fundingId;
-    @Column(name = "product_id")
-    private Long productId;
-    @Column(name = "funding_price")
+
+    @Column(name = "funding_price", nullable = false)
     private Long fundingPrice;
-    @Column(name = "member_id")
-    private Long memberId;
+
     @CreatedDate
     @Column(name = "funding_date")
     private LocalDate fundingDate;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 }

@@ -1,38 +1,44 @@
 package com.study.funding.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
+import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
 @Table(name = "product")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Product {
     @Id
-    @Column(name = "product_id")
+    @Column(name = "product_id", nullable = false)
     @GeneratedValue
     private Long productId;
-    @Column(name = "product_name")
+    @Column(name = "product_name", nullable = false)
     private String productName;
-    @Column(name = "target_funding_price")
+    @Column(name = "target_funding_price", nullable = false)
     private Long targetFundingPrice;
-    @Column(name = "total_funding_price")
+    @Column(name = "total_funding_price", nullable = false)
     private Long totalFundingPrice;
-    @Column(name = "funding_status")
+    @Column(name = "funding_status", nullable = false, length = 30)
     private String fundingStatus;
-    @Column(name = "funding_member_id")
-    private Long fundingMemberId;
-    @Column(name = "start_date")
+    @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
-    @Column(name = "finish_date")
+    @Column(name = "finish_date", nullable = false)
     private LocalDate finishDate;
-    @Column(name = "funding_member_number")
+    @Column(name = "funding_member_number", nullable = false)
     private int fundingMemberNumber = 0;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private List<Funding> fundingList = new ArrayList<>();
 }
