@@ -40,7 +40,7 @@ public class ProductService {
     @Transactional
     public void updateProduct(Product product) {
         Product updateProduct =  productRepository.findById(product.getProductId()).orElseThrow(()
-                -> new EntityNotFoundException(NOT_FOUND_PRODUCT));;
+                -> new EntityNotFoundException(NOT_FOUND_PRODUCT));
 
         updateProduct.setProductId(product.getProductId());
         updateProduct.setProductName(product.getProductName());
