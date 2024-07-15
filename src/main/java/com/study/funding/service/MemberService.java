@@ -1,7 +1,7 @@
 package com.study.funding.service;
 
 import com.study.funding.entity.Member;
-import com.study.funding.exception.entity.EntityNotFoundException;
+import com.study.funding.exception.entity.user.UserNotFoundException;
 import com.study.funding.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,6 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public Member getMember(Long memberId) {
-        return memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException(NOT_SIGNED_UP_MEMBER));
+        return memberRepository.findById(memberId).orElseThrow(() -> new UserNotFoundException(NOT_SIGNED_UP_MEMBER));
     }
 }

@@ -3,7 +3,7 @@ package com.study.funding.service;
 import com.study.funding.data.MemberFundingResponse;
 import com.study.funding.entity.Funding;
 import com.study.funding.entity.Member;
-import com.study.funding.entity.Product;
+import com.study.funding.exception.entity.funding.FundingNotFoundException;
 import com.study.funding.repository.FundingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.study.funding.error.ErrorCode.NOT_FOUND_FUNDING;
 
 
 @Service
@@ -41,4 +43,8 @@ public class FundingService {
         return memberFundingResponseList;
     }
 
+    @Transactional(readOnly = true)
+    public Funding getFunding(Long fundingId) {
+        return fundingRepository.findById(fundingId).orElseThrow(() -> new FundingNotFoundException(NOT_FOUND_FUNDING));
+    }
 }

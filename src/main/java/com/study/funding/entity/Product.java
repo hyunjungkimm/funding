@@ -3,6 +3,7 @@ package com.study.funding.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
@@ -32,6 +33,7 @@ public class Product {
     @Column(name = "funding_status", nullable = false, length = 30)
     private String fundingStatus;
     @Column(name = "start_date", nullable = false)
+    @CreatedDate
     private LocalDate startDate;
     @Column(name = "finish_date", nullable = false)
     private LocalDate finishDate;
