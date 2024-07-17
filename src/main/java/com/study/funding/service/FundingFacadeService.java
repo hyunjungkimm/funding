@@ -35,12 +35,10 @@ public class FundingFacadeService {
 
         Product product = productService.getProduct(productId);
 
-        checkFundingStatus(product, fundingRequest);
-
         if(product.getFundingStatus().equals(FundingStatus.IN_PROGRESS.getStatus())) {
-            productService.updateProduct(product);
-            Product updateProduct = productService.getProduct(productId);
+            checkFundingStatus(product, fundingRequest);
 
+            Product updateProduct = productService.getProduct(productId);
             Member member = memberService.getMember(memberId);
 
             Funding funding = new Funding();
@@ -48,6 +46,9 @@ public class FundingFacadeService {
             funding.setProduct(updateProduct);
             funding.setMember(member);
             fundingService.productFunding(funding);
+
+            updateProduct.setTotalFundingPrice(updateProduct.getTotalFundingPrice()+fundingRequest.getFundingPrice());
+            productService.updateProduct(product);
 
             FundingResponse fundingResponse = new FundingResponse();
             fundingResponse.setFundingStatus("펀딩 성공");

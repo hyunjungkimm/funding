@@ -43,4 +43,7 @@ public class Product {
     @JsonManagedReference
     @OneToMany(mappedBy = "product")
     private List<Funding> fundingList = new ArrayList<>();
+
+//    @Version
+//    private Integer version;
 }

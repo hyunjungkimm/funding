@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,6 +19,14 @@ class ProductRepositoryTest {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Test
+    void findByProductId() {
+        long productId = 1L;
+        Optional<Product> product = productRepository.findByProductId(productId);
+
+        assertThat(product.get().getProductId()).isEqualTo(1L);
+    }
 
     @Test
     void findProductByFundingStatusAndStartDateLessThanEqualAndFinishDateGreaterThanEqual() {

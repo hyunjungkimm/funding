@@ -55,7 +55,7 @@ class ProductServiceTest {
         Long productId = 1L;
 
         when(
-                productRepository.findById(productId)
+                productRepository.findByProductId(productId)
         ).thenReturn(
                 Optional.ofNullable(makeProduct(productId))
         );
@@ -71,7 +71,7 @@ class ProductServiceTest {
         Long productId = 1L;
 
         when(
-                productRepository.findById(productId)
+                productRepository.findByProductId(productId)
         ).thenReturn(
                 Optional.empty()
         );
@@ -104,7 +104,7 @@ class ProductServiceTest {
         Product product = makeProduct(productId);
 
         when(
-                productRepository.findById(productId)
+                productRepository.findByProductId(productId)
         ).thenReturn(
                 Optional.ofNullable(product)
         );
