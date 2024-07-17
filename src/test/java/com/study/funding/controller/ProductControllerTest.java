@@ -8,6 +8,8 @@ import com.study.funding.repository.MemberRepository;
 import com.study.funding.service.ProductService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -101,10 +103,10 @@ class ProductControllerTest {
 
 
     @DisplayName("펀딩 제품 전체 조회하기 - getAllProduct")
-    @Test
-    void getAllProduct() throws Exception {
+    @ParameterizedTest
+    @ValueSource(longs={1,2,3})
+    void getAllProduct(Long memberId) throws Exception {
 
-        Long memberId = 1L;
         Slice<ProductResponse> productResponseSlice = new PageImpl<>(productResponseList());
 
         when(
@@ -151,6 +153,4 @@ class ProductControllerTest {
 
         return List.of(productResponse);
     }
-
-
 }

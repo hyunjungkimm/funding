@@ -9,6 +9,7 @@ import com.study.funding.exception.entity.prodcut.ProductNotFoundException;
 import com.study.funding.repository.ProductRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import static com.study.funding.error.ErrorCode.NOT_FOUND_PRODUCT;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -28,12 +30,12 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public Product getProduct(long productId) {
-        return productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(NOT_FOUND_PRODUCT));
+        return productRepository.findByProductId(productId).orElseThrow(() -> new ProductNotFoundException(NOT_FOUND_PRODUCT));
     }
 
     @Transactional
     public void updateProduct(Product product) {
-        Product updateProduct =  productRepository.findById(product.getProductId()).orElseThrow(()
+        Product updateProduct =  productRepository.findByProductId(product.getProductId()).orElseThrow(()
                 -> new ProductNotFoundException(NOT_FOUND_PRODUCT));
 
         updateProduct.setProductId(product.getProductId());

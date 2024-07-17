@@ -12,6 +12,7 @@ CREATE TABLE PRODUCT (
      START_DATE timestamp not null,
      FINISH_DATE timestamp not null,
      FUNDING_MEMBER_NUMBER integer not null,
+     -- VERSION integer,
      primary key (PRODUCT_ID)
 );
 
